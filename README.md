@@ -1,5 +1,7 @@
 # nuxt-glsl-template
 
+A quickstart template for GLSL and THREE.js implementation in Nuxt.js
+
 ## Build Setup
 
 ```bash
