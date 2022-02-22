@@ -9,10 +9,7 @@ uniform sampler2D u_image;
 varying vec2 vUv;
 
 void main(){
-    vec3 color = vec3(0.0);
     vec2 st = gl_FragCoord.xy / u_resolution;
 
-    color.rg = st*u_mouse;
-
-    gl_FragColor = vec4(color,1.0);
+    gl_FragColor = vec4(vUv,0.0,1.0);
 }
