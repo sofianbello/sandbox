@@ -1,6 +1,6 @@
 <template>
   <div class="home">
-    <HTML class="title"/>
+    <HTML class="html"/>
     <THREE class="threejs"/>
   </div>
 </template>
@@ -16,7 +16,7 @@ export default {
   position: relative;
   z-index: 1;
 }
-.title{
+.html{
   position: relative;
   z-index: 0;
 }
