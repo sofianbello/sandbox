@@ -11,5 +11,5 @@ varying vec2 vUv;
 void main(){
     vec2 st = gl_FragCoord.xy / u_resolution;
 
-    gl_FragColor = vec4(vUv,0.0,1.0);
+    gl_FragColor = vec4(vUv*u_mouse,0.0,1.0);
 }

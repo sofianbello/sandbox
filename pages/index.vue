@@ -1,5 +1,6 @@
 <template>
   <div class="home">
+    <HTML class="title"/>
     <THREE class="threejs"/>
   </div>
 </template>
@@ -14,5 +15,9 @@ export default {
 .threejs{
   position: relative;
   z-index: 1;
+}
+.title{
+  position: relative;
+  z-index: 0;
 }
 </style>
