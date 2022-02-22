@@ -100,8 +100,8 @@ mounted() {      //Initial Function (Will be executed immeadiatly on page load)
        * Renderer
        */
 
-      this.renderer = new THREE.WebGLRenderer({alpha: false}); // For Transperancy add: { alpha: true }
-      // this.renderer.setClearColor(new THREE.Color(0x151515)); // Set Canvas BG-Color
+      this.renderer = new THREE.WebGLRenderer({alpha: true}); // For Transperancy add: { alpha: true }
+      this.renderer.setClearColor(new THREE.Color(0xEFC566)); // Set Canvas BG-Color
       this.renderer.setSize(window.innerWidth, window.innerHeight);
       this.renderer.setPixelRatio(window.devicePixelRatio)
 
