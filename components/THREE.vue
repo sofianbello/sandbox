@@ -101,7 +101,7 @@ mounted() {      //Initial Function (Will be executed immeadiatly on page load)
        */
 
       this.renderer = new THREE.WebGLRenderer({alpha: false}); // For Transperancy add: { alpha: true }
-      this.renderer.setClearColor(new THREE.Color(0x151515)); // Set Canvas BG-Color
+      // this.renderer.setClearColor(new THREE.Color(0x151515)); // Set Canvas BG-Color
       this.renderer.setSize(window.innerWidth, window.innerHeight);
       this.renderer.setPixelRatio(window.devicePixelRatio)
 
@@ -138,7 +138,7 @@ mounted() {      //Initial Function (Will be executed immeadiatly on page load)
        * Mesh
        */
 
-      const geometry = new THREE.PlaneGeometry(50,50)     
+      const geometry = new THREE.SphereBufferGeometry(16,32,32)     
       const shader = new THREE.ShaderMaterial({
         uniforms: this.uniforms,
         vertexShader: vertex,
@@ -175,6 +175,7 @@ mounted() {      //Initial Function (Will be executed immeadiatly on page load)
         clock.running = true;
         this.uniforms.u_time.value = clock.getElapsedTime();
         const timer = this.uniforms.u_time.value;
+        // this.mesh.rotation.x = Math.PI *timer*0.125;
         this.mesh.rotation.y = Math.PI *timer*0.125;
         this.camera.lookAt( this.scene.position );
 				this.render();      

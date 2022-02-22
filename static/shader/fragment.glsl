@@ -10,6 +10,7 @@ varying vec2 vUv;
 
 void main(){
     vec2 st = gl_FragCoord.xy / u_resolution;
-
-    gl_FragColor = vec4(vUv,0.0,1.0);
+    float strength = mod(vUv.x*10.0,1.0);
+    strength = step(0.5, strength);
+    gl_FragColor = vec4(vec3(strength),1.0);
 }
