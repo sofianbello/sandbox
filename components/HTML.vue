@@ -23,7 +23,7 @@ export default {
 .heading{
     color: white;
     text-align: center;
-    font-size: 20rem;
-    line-height: 20rem;
+    font-size: 10rem;
+    line-height: 10rem;
 }
 </style>

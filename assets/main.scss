@@ -7,8 +7,14 @@
 
 html{
     background-color: #1c1c1c;
-
-}
+    font-size: 12px;  
+    @media (min-width: 800px) {
+        font-size: 14px;
+      }  
+    @media (min-width: 1200px) {
+        font-size: 25px;
+      }
+    }
 
 body::-webkit-scrollbar {
     display: none;
