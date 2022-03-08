@@ -140,7 +140,7 @@ mounted() {      //Initial Function (Will be executed immeadiatly on page load)
        * Mesh
        */
 
-      const geometry = new THREE.PlaneGeometry(25,25)     
+      const geometry = new THREE.BoxBufferGeometry(25,25,25)     
       const shader = new THREE.ShaderMaterial({
         uniforms: this.uniforms,
         vertexShader: vertex,
@@ -177,6 +177,7 @@ mounted() {      //Initial Function (Will be executed immeadiatly on page load)
         clock.running = true;
         this.uniforms.u_time.value = clock.getElapsedTime();
         const time = this.uniforms.u_time.value;
+        this.mesh.rotation.y = time * 0.05;
         this.camera.lookAt( this.scene.position );
 				this.render();      
       },
