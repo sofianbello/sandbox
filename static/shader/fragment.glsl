@@ -80,8 +80,15 @@ void main(){
     float angle = atan(vUv.x - 0.5, vUv.y - 0.5) / (PI * 2.0) + 0.5;
     float radius = 0.25 + sin(angle * 100.0) * 0.012;
 
+    vec3 blackColor = vec3(step(0.9, cos( cnoise(vUv * 10.0 ) * 20.0)));
+
+    vec3 uvColor = vec3(vUv / 2., 1.0);
+
+    vec3 mixedColor = mix(blackColor, uvColor, 0.4);
+
+
 
     float strength = step(0.9, cos( cnoise(vUv * 10.0 ) * 20.0));
 
-    gl_FragColor = vec4(vec3(strength), 1.0);
+    gl_FragColor = vec4(mixedColor, 1.0);
 }
