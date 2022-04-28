@@ -1,7 +1,7 @@
 <template>
   <div id="title">
-      <h1 class="heading">NUXT</h1>
-      <h1 class="heading">SHADER-TEMPLATE</h1>
+      <h1 class="heading">WELCOME TO</h1>
+      <h1 class="heading">THE SANDBOX</h1>
   </div>
 </template>
 
