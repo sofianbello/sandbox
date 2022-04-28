@@ -140,7 +140,7 @@ mounted() {      //Initial Function (Will be executed immeadiatly on page load)
        * Mesh
        */
 
-      const geometry = new THREE.BoxBufferGeometry(25,25,25)     
+      const geometry = new THREE.SphereBufferGeometry(25,32,64)     
       const shader = new THREE.ShaderMaterial({
         uniforms: this.uniforms,
         vertexShader: vertex,
