@@ -96,15 +96,17 @@ mounted() {      //Initial Function (Will be executed immeadiatly on page load)
       camera.add(this.camera.rotation, 'y').name('Rotation Y')
       camera.add(this.camera.rotation, 'z').name('Rotation Z')
 
+
       /**
        * Renderer
        */
-
+      
       this.renderer = new THREE.WebGLRenderer({alpha: true}); // For Transperancy add: { alpha: true }
       // this.renderer.setClearColor(new THREE.Color(0x151515)); // Set Canvas BG-Color
       this.renderer.setSize(window.innerWidth, window.innerHeight);
       this.renderer.setPixelRatio(window.devicePixelRatio)
 
+      this.orbitControls = new THREE.OrbitControls(this.camera, this.renderer.domElement);
       this.objects();
     },
 
@@ -174,8 +176,8 @@ mounted() {      //Initial Function (Will be executed immeadiatly on page load)
         const clock = new THREE.Clock()
         clock.running = true;
         this.uniforms.u_time.value = clock.getElapsedTime();
-        const timer = this.uniforms.u_time.value;
-        this.mesh.rotation.y = Math.PI *timer*0.125;
+        const time = this.uniforms.u_time.value;
+        this.mesh.rotation.y = time * 0.05;
         this.camera.lookAt( this.scene.position );
 				this.render();      
       },
