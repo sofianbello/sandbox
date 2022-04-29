@@ -26,6 +26,8 @@ export default {
       camera: undefined,
       renderer: undefined,
       uniforms: undefined,
+      geometry: undefined,
+      shader: undefined,
 
       /** 
        * Optional
@@ -75,12 +77,14 @@ mounted() {      //Initial Function (Will be executed immeadiatly on page load)
        */
 
       this.debug = new GUI()
-      this.debug.open(false)
+      // this.debug.open(false)
+      
+
 
       /**
        * Camera
        */
-
+      
       this.camera = new THREE.PerspectiveCamera(
         75,
         window.innerWidth / window.innerHeight,
@@ -88,13 +92,8 @@ mounted() {      //Initial Function (Will be executed immeadiatly on page load)
         1000
       );
       this.camera.position.z = 50;
-      const camera= this.debug.addFolder('Camera')
-      camera.add(this.camera.position, 'x').name('Position X')
-      camera.add(this.camera.position, 'y').name('Position Y')
-      camera.add(this.camera.position, 'z').name('Position Z')
-      camera.add(this.camera.rotation, 'x').name('Rotation X')
-      camera.add(this.camera.rotation, 'y').name('Rotation Y')
-      camera.add(this.camera.rotation, 'z').name('Rotation Z')
+      
+      
 
 
       /**
@@ -111,25 +110,25 @@ mounted() {      //Initial Function (Will be executed immeadiatly on page load)
     },
 
     objects(){
-
+      
       /**
        * Loaders
        */
-
+      
       this.loader = new THREE.TextureLoader()
 
       /**
        * Textures
       */
-
-      const imgTx = this.loader.load('./textures/grass/grasslight-big.jpg');
+     
+     const imgTx = this.loader.load('./textures/grass/grasslight-big.jpg');
  
       /**
        * Uniforms
       */
-      
-      this.uniforms = {
-        u_time: { type: 'f', value: 0.0},
+     
+     this.uniforms = {
+       u_time: { type: 'f', value: 0.0},
         u_mouse: {type: 'v2', value: new THREE.Vector2(0.0, 0.0)},
         u_resolution: {type: 'v2', value: new THREE.Vector2(window.innerWidth, window.innerHeight)
                         .multiplyScalar(window.devicePixelRatio)},
@@ -139,9 +138,20 @@ mounted() {      //Initial Function (Will be executed immeadiatly on page load)
       /**
        * Mesh
        */
-
-      const geometry = new THREE.SphereBufferGeometry(25,32,64)     
-      const shader = new THREE.ShaderMaterial({
+      
+      const myObjects = { 
+        sphere: new THREE.SphereGeometry(18,24,64),
+        cube: new THREE.BoxGeometry(24,24,24), 
+        torus: new THREE.TorusGeometry(20,7,64, 25)}
+      
+        this.objectController = { 
+        a: myObjects.sphere, 
+        b: myObjects.cube, 
+        c: myObjects.torus, 
+        // cube: new THREE.BoxGeometry(25,25,25),
+        // torus: new THREE.TorusGeometry(12,5,64,25)
+        }     
+        this.shader = new THREE.ShaderMaterial({
         uniforms: this.uniforms,
         vertexShader: vertex,
         fragmentShader: fragment,
@@ -150,26 +160,74 @@ mounted() {      //Initial Function (Will be executed immeadiatly on page load)
 
         })
 
+
+
       // Update u_mouse Value
       window.addEventListener('mousemove', function(e) {
-        shader.uniforms.u_mouse.value.set(e.screenX / window.innerWidth, 1 - e.screenY / window.innerHeight)
+        // this.shader.uniforms.u_mouse.value.set(e.screenX / window.innerWidth, 1 - e.screenY / window.innerHeight)
       })
       
-      this.mesh = new THREE.Mesh(geometry,shader)
 
+      
+
+      
       // Add Debug Menu
-      const object1 = this.debug.addFolder('Mesh')
-      object1.add(this.mesh.position, 'x').name('Position X')
-      object1.add(this.mesh.position, 'y').name('Position Y')
-      object1.add(this.mesh.position, 'z').name('Position Z')
-      object1.add(this.mesh.rotation, 'x').name('Rotation X')
-      object1.add(this.mesh.rotation, 'y').name('Rotation Y')
-      object1.add(this.mesh.rotation, 'z').name('Rotation Z')
-      this.scene.add(this.mesh)
+
+      const objectMenu = this.debug.addFolder('Object Menu')
+      console.log(myObjects.sphere);
+      objectMenu.add(this.objectController, 'geometry', [myObjects.sphere, myObjects.cube, myObjects.torus ])
+      .onChange(this.updateObject)
+
+
 
       // Call animate function
-      this.animate()
+      this.render()
     },
+      updateObject(){
+        if (this.objectController.geometry === this.objectController.a) {
+          if (this.mesh){
+            console.log('MESH DETECTED !!!');
+            this.clearObject()
+          }else {
+            console.log('creating a sphere');
+            this.mesh = new THREE.Mesh(this.objectController.a,this.shader)
+            this.scene.add(this.mesh)
+            this.animate()
+        }
+
+        }else if (this.objectController.geometry === this.objectController.b) {
+          if (this.mesh){
+            console.log('MESH DETECTED !!!');
+            this.clearObject()
+          }else {
+            console.log( 'a cube')
+            this.mesh = new THREE.Mesh(this.objectController.b,this.shader) 
+            this.scene.add(this.mesh)
+            this.animate()
+          }
+        }else{
+          if (this.mesh){
+            console.log('MESH DETECTED !!!');
+            this.clearObject()
+          }else {
+          this.mesh = new THREE.Mesh(this.objectController.c,this.shader) 
+          this.scene.add(this.mesh)
+          this.animate()
+          }
+
+          }
+
+        
+        // this.scene.add(this.mesh)
+
+      },
+
+      clearObject(){
+        console.log(this.scene.children[0]);
+        this.scene.children[0].dispose()
+        this.mesh.material.dispose()
+      },
+
 
       animate(){
         requestAnimationFrame( this.animate );
@@ -207,6 +265,11 @@ mounted() {      //Initial Function (Will be executed immeadiatly on page load)
         this.renderer.setSize( window.innerWidth, window.innerHeight );
         this.render()
   
+        },
+        
+        generate(){
+          this.mesh = new THREE.Mesh(this.geometry.torus,this.shader);
+          this.scene.add(this.mesh)
         },
   },
     
